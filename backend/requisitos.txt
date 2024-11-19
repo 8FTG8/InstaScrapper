@@ -1,0 +1,23 @@
+# MODELO DE SAÍDA #
+
+Total de reels: X
+Total de estáticos: X
+Total de carrosséis: X
+
+Post 1:
+Data: 02-11-2024 || 12:00
+Legenda: A legenda estará escrita aqui.
+URL da imagem: https://instagram.com/post/1
+Formato do post: GraphImage
+
+---
+
+1 estrela - Instagram inativo: +90 dias do último post.
+2 estrelas - Instagram sem frequência: Último post antes de 90 dias, mas sem posts semanais (considerando intervalos máximos de 10 dias).  
+3 estrelas - Instagram com frequência: Posts semanais (considerando intervalos máximos de 10 dias).  
+4 estrelas - Instagram com comunicação em saúde: 5 dos últimos 10 posts comunicam saúde.  
+   - Posts simples: Normalmente comunicam saúde na legenda.  
+   - Carrossel: Comunicam saúde na arte.  
+   - Reels: Normalmente são institucionais ou comunicam saúde.
+
+* A partir da 2 estrela considerar os últimos 10 posts
