@@ -49,8 +49,8 @@ def download_and_classify_posts(username, data_inicial, data_final):
                 else:
                     estaticos += 1
 
-                # CONTADOR  DE TODAS AS POSTAGENS
-                total += 1
+                # CLASSIFICA AS ESTRELAS DO PERFIL
+                 
 
                 # FAZ O DOWNLOAD DO POST
                 loader.download_post(post, target=username)
