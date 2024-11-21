@@ -38,7 +38,7 @@ def download_and_classify_posts(username, data_inicial, data_final):
                 post_info = {
                     "Data": post.date,
                     "Legenda": post.caption,
-                    "URL Encurtado": shorten_url,
+                    "URL Encurtada": shorten_url,
                     "Formato do Post": post.typename
                 }
                 posts_selecionados.append(post_info)
@@ -48,10 +48,7 @@ def download_and_classify_posts(username, data_inicial, data_final):
                     reels += 1
                 else:
                     estaticos += 1
-
-                # CLASSIFICA AS ESTRELAS DO PERFIL
-                 
-
+                
                 # FAZ O DOWNLOAD DO POST
                 loader.download_post(post, target=username)
                 
@@ -62,20 +59,54 @@ def download_and_classify_posts(username, data_inicial, data_final):
         print("Ocorreu um erro: ", e)
         return None, 0, 0, 0
 
+# FUNÇÃO PARA CLASSIFICAR CLIENTE POR ESTRELAS
+def classify_profile_stars(posts):
+
+    # CALCULA A DATA DO ÚLTIMO POST
+    last_post_date = posts[0]["Data"]
+
+    # SE O ÚLTIMO POST FOI A MAIS DE 90 DIAS = 1 ESTRELA
+    if datetime.now() - last_post_date > timedelta(days=90):
+        estrela = 1
+        return estrela
+    
+    # CONSIDERA OS ÚLTIMOS 10 POSTS
+    last_ten_posts = posts[:10]
+
+    # VERIFICA OS INTERVALOS PARA DETERMINAR A FREQUÊNCIA
+    intervalos = []
+    for i in range(1, len(last_ten_posts)):
+        intervalo = last_ten_posts[i-1]["Data"] - last_ten_posts[i]["Data"]
+        intervalos.append(intervalo.days)
+
+        # SE OS INTERVALOS SÃO MAIORES QUE 10 DIAS EM QUALQUER CASO = 2 ESTRELAS
+        if any(intervalo > 10 for intervalo in intervalos):
+            estrela = 2
+            return estrela
+        # SE OS INTERVALOS SÃO ATÉ 10 DIAS = 3 ESTRELAS
+        else: 
+            estrela = 3
+            return estrela
+        
+
 # SOLICITA OS PARÂMETROS AO USUÁRIO
 if __name__ == "__main__":
     username = input("\nInfome o perfil do Instagram: ")
     data_inicial = input("Informe a data inicial (dd/mm/aaaa): ")
     data_final = input("Informe a data final (dd/mm/aaaa): ")
 
-    # CHAMA A FUNÇÃO
+    # CHAMA As FUNÇÕES
     posts, total, estaticos, reels = download_and_classify_posts(username, data_inicial, data_final)
+    estrela = classify_profile_stars(posts)
 
     # EXIBE OS RESULTADOS
     if posts:
-        print(f"\nTotal de posts do período: {len(posts)}")
-        print(f"Posts estáticos: {estaticos}")
-        print(f"Reels: {reels}\n")
+        print(f"\n---------- RESULTADOS ----------")
+        print(f"Total de posts do período: {len(posts)}")
+        print(f"Total de estáticos: {estaticos}")
+        print(f"Total de reels: {reels}")
+        print(f"Classificação do Lead por estrela: {estrela}")
+        print(f"\n")
 
         for idx, post in enumerate(posts, start = 1):
             print(f"Post {idx}:")

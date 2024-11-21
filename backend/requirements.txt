@@ -1,8 +1,10 @@
 # MODELO DE SAÍDA #
 
+Total de posts do período: X
 Total de reels: X
 Total de estáticos: X
 Total de carrosséis: X
+Classificação por estrelas: X
 
 Post 1:
 Data: 02-11-2024 || 12:00

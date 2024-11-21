@@ -1,1 +1,0 @@
-# Funções para análise de conteúdo usando a API do ChatGPT
