@@ -1,4 +1,4 @@
-# MODELO DE SAÍDA #
+------ MODELO DE SAÍDA ------
 
 Total de posts do período: X
 Total de reels: X
@@ -12,7 +12,7 @@ Legenda: A legenda estará escrita aqui.
 URL da imagem: https://instagram.com/post/1
 Formato do post: GraphImage
 
----
+------ CLASSIFICAÇÃO DE LEADS ------
 
 1 estrela - Instagram inativo: +90 dias do último post.
 2 estrelas - Instagram sem frequência: Último post antes de 90 dias, mas sem posts semanais (considerando intervalos máximos de 10 dias).  

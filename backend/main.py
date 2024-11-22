@@ -50,7 +50,7 @@ def download_and_classify_posts(username, data_inicial, data_final):
                     estaticos += 1
                 
                 # FAZ O DOWNLOAD DO POST
-                loader.download_post(post, target=username)
+                # loader.download_post(post, target=username)
                 
         # RETORNA OS POSTS COLETADOS
         return posts_selecionados, total, estaticos, reels
@@ -61,6 +61,11 @@ def download_and_classify_posts(username, data_inicial, data_final):
 
 # FUNÇÃO PARA CLASSIFICAR CLIENTE POR ESTRELAS
 def classify_profile_stars(posts):
+
+    # SE NENHUM POST FOI ENCRONTRADO = 1 ESTRELA
+    if not posts:
+        estrela = 1
+        return estrela
 
     # CALCULA A DATA DO ÚLTIMO POST
     last_post_date = posts[0]["Data"]
@@ -83,11 +88,11 @@ def classify_profile_stars(posts):
         if any(intervalo > 10 for intervalo in intervalos):
             estrela = 2
             return estrela
+
         # SE OS INTERVALOS SÃO ATÉ 10 DIAS = 3 ESTRELAS
         else: 
             estrela = 3
             return estrela
-        
 
 # SOLICITA OS PARÂMETROS AO USUÁRIO
 if __name__ == "__main__":
