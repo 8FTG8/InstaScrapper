@@ -23,3 +23,14 @@ Formato do post: GraphImage
    - Reels: Normalmente são institucionais ou comunicam saúde.
 
 * A partir da 2 estrela considerar os últimos 10 posts
+
+------ TO DO ------
+
+FRONTEND
+- Validar campos
+- Adicionar estado checkboxes
+- Scroll grid posts capturados
+- Arrumar header
+
+BACKEND
+- Implementar lib scrapping
