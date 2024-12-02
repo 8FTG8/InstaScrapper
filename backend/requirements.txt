@@ -1,0 +1,5 @@
+selenium
+
+pyshorteners
+
+webdriver-manager
