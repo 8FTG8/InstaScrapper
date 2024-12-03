@@ -61,11 +61,11 @@ class CustomDateBox extends StatelessWidget {
 }
 
 // FUNÇÃO PARA EXIBIR O CALENDÁRIO
-Future <void> selectDate(BuildContext context, TextEditingController controller) async {
+Future<void> selectDate(BuildContext context, TextEditingController controller) async {
   final DateTime? pickedDate = await showDatePicker(
     context: context,
     initialDate: DateTime.now(),
-    firstDate: DateTime(2010), // Data mínima permitida
+    firstDate: DateTime(2015), // Data mínima permitida
     lastDate: DateTime(2030), // Data máxima permitida
   );
 

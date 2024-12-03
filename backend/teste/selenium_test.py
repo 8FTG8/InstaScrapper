@@ -9,7 +9,7 @@ import time
 
 # CONFIGURAÇÃO DO WEBDRIVER
 def init_driver():
-    service = Service(ChromeDriverManager().install()) 
+    service = Service(ChromeDriverManager().install())
     options = webdriver.ChromeOptions()
     options.add_argument("--start-maximized")
     options.add_argument("--disable-blink-features=AutomationControlled")
@@ -18,12 +18,30 @@ def init_driver():
     driver = webdriver.Chrome(service=service, options=options)
     return driver
 
+# FUNÇÃO DE LOGIN NO INSTAGRAM
+def login_instagram(driver, usuario, senha):
+    driver.get("https://www.instagram.com/accounts/login/")
+    time.sleep(5)
+
+    user_field = driver.find_element(By.NAME, "username")
+    pass_field = driver.find_element(By.NAME, "password")
+
+    user_field.send_keys(usuario)
+    pass_field.send_keys(senha)
+
+    pass_field.send_keys(Keys.RETURN)
+    time.sleep(10)
+
+def scroll_page(driver):
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(3)
+
 # FUNÇÃO PARA BAIXAR E CLASSIFICAR POSTS
 def download_and_classify_posts(driver, profile, data_inicial, data_final):
     estatico, reel, carrossel, posts_selecionados = 0, 0, 0, []
     shortener = pyshorteners.Shortener()
 
-    # CONVERTE AS DATAS PARA FORMATO DATETIME
+    # Converte as datas para o formato datetime
     try:
         data_inicial = datetime.strptime(data_inicial, "%d/%m/%Y")
         data_final = datetime.strptime(data_final, "%d/%m/%Y") + timedelta(days=1)
@@ -31,11 +49,14 @@ def download_and_classify_posts(driver, profile, data_inicial, data_final):
         print("Erro no formato das datas:", e)
         return None, 0, 0, 0
     
-    # ACESSA O PERFIL
+    # Acessa o perfil
     driver.get(f"https://www.instagram.com/{profile}/")
-    time.sleep(5) # Aguarda o perfil carregar
+    time.sleep(5)
 
-    # ENCONTRA OS POSTS E OS CLASSIFICA
+    # Faz o scroll da página
+    scroll_page(driver)
+
+    # Encontra os posts e os classifica
     posts_elements = driver.find_elements(By.XPATH, '//article//a')
     for posts_element in posts_elements:
         try:
@@ -72,7 +93,7 @@ def download_and_classify_posts(driver, profile, data_inicial, data_final):
 
             # Fecha o post
             driver.find_element(By.XPATH, '//div[@role="dialog"]/div/button').click()
-            time.sleep(2)
+            time.sleep(5) #
         
         except Exception as e:
             print(f"Erro ao processar post: {e}")
@@ -86,12 +107,19 @@ if __name__ == "__main__":
     data_inicial = input("Informe a data inicial (dd/mm/aaaa): ")
     data_final = input("Informe a data final (dd/mm/aaaa): ")
 
-     # INICIALIZA O DRIVER E EXECUTA O SCRIPT
+     # Inicializa o driver e executa o scrapy
     driver = init_driver()
     try:
+
+        # Faz o login no Instagram
+        usuario = "produtodrfisiologia"
+        senha = "qwert00..."
+        login_instagram(driver, usuario, senha)
+        
+        # Baixa e classifica os posts
         posts, estatico, reel, carrossel = download_and_classify_posts(driver, profile, data_inicial, data_final)
 
-        # EXIBE OS RESULTADOS
+        # Exibe os resultados
         if posts:
             print("\n---------- RESULTADOS ----------")
             print(f"Total de posts do período: {len(posts)}")
