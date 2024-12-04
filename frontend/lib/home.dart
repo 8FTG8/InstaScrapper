@@ -6,30 +6,70 @@ import 'package:frontend/widgets/text_box.dart';
 import 'package:frontend/widgets/date_box.dart';
 import 'package:frontend/widgets/stars_rating.dart';
 import 'package:google_fonts/google_fonts.dart';
+import "package:frontend/services/api_service.dart";
 
 void main() {
   runApp(MyApp());
 }
 
+// CLASS MY-APP
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Instagram Scraper',
-      home: HomeScreen(),
+      title: 'Análise de Posts',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: GoogleFonts.workSans().fontFamily,
+      ),
+      home: const HomeScreen(),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+// CLASS HOME-SCREEN
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  HomeScreenState createState() => HomeScreenState();
+}
+
+// CLASS HOME-SCREEN-STATE
+class HomeScreenState extends State<HomeScreen> {
   final TextEditingController startDate = TextEditingController();
   final TextEditingController endDate = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final _controller = TextEditingController();
+  final ApiService apiService = ApiService(baseUrl: 'http://127.0.0.1:5000');
+
+  int _healthEducationCounter = 0;
+  int _celebrationCounter = 0;
+  int _publicityCounter = 0;
+  int _stars = 1;
+  List<dynamic> _capturedPosts = [];
+
+  Future<void> fetchPosts() async {
+    try {
+      final data = await apiService.fetchPosts(
+        username: _controller.text,
+        dataInicial: startDate.text,
+        dataFinal: endDate.text,
+      );
+
+      setState(() {
+        _healthEducationCounter = data['estatico'];
+        _celebrationCounter = data['carrossel'];
+        _publicityCounter = data['reel'];
+        _stars = data['estrela'];
+        _capturedPosts = data['posts'];
+      });
+    } catch (e) {
+      print("Erro ao buscar posts: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +111,20 @@ class HomeScreen extends StatelessWidget {
                       width: 400,
                       controller: _controller,
                       formKey: _formKey,
+                    ),
+
+                    // BUSCAR POSTS
+                    SizedBox(width: 12),
+                    ElevatedButton(
+                      onPressed: fetchPosts, 
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF0F4655),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                      ),
+                      child: Text(
+                        'Buscar Posts',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
                     ),
                   ],
                 ),
@@ -116,11 +170,11 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CounterBox(label: 'Educação em saúde:', counter: 000),
+                    CounterBox(label: 'Educação em saúde:', counter: _healthEducationCounter),
                     SizedBox(width: 18),
-                    CounterBox(label: 'Data comemorativa:', counter: 000),
+                    CounterBox(label: 'Data comemorativa:', counter: _celebrationCounter),
                     SizedBox(width: 18),
-                    CounterBox(label:'Publicidade:', counter: 000),
+                    CounterBox(label:'Publicidade:', counter: _publicityCounter),
                   ],
                 ),
 
@@ -139,7 +193,7 @@ class HomeScreen extends StatelessWidget {
 
                 // CLASSIFICAÇÃO POR ESTRELAS
                 const SizedBox(height: 24),
-                StarsRating(labelText: 'Classificação por estrelas:', index: 2, starSpacing: 6),
+                StarsRating(labelText: 'Classificação por estrelas:', starSpacing: 6, index: _stars),
 
                 // POSTS CAPTURADOS
                 const SizedBox(height: 48),
@@ -161,10 +215,10 @@ class HomeScreen extends StatelessWidget {
                 // GRID DE POSTS CAPTURADOS
                 const SizedBox(height: 36),
                 GridView.builder(
-                  shrinkWrap: true, // Ajusta o tamanho da lista para ocupar apenas o espaço necessário, sem expandir
+                  shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 6, // Define o número de colunas (ou linhas) em uma grade
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: MediaQuery.of(context).size.width > 1200 ? 6 : 3,
                     crossAxisSpacing: 18,
                     mainAxisSpacing: 18,
                   ),
@@ -176,6 +230,10 @@ class HomeScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: (Color(0xFF0F4655)),
                         borderRadius: BorderRadius.circular(6),
+                        image: DecorationImage(
+                          image: NetworkImage(_capturedPosts[index]['imageUrl']),
+                          fit: BoxFit.cover,
+                        )
                       ),
                     );
                   },
@@ -188,3 +246,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+

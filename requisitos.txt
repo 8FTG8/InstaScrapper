@@ -27,10 +27,5 @@ Formato do post: GraphImage
 ------ TO DO ------
 
 FRONTEND
-- Validar campos
-- Adicionar estado checkboxes
-- Scroll grid posts capturados
-- Arrumar header
 
 BACKEND
-- Implementar lib scrapping

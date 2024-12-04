@@ -34,7 +34,7 @@ class StarsRating extends StatelessWidget{
               padding: EdgeInsets.only(right: i < 4 ? starSpacing : 0),
               child: Icon(
                 i < index ? Icons.star : Icons.star_border,
-                size: 26,
+                size: 28,
                 color: Color(0xFF0F4655),
               ),
             );

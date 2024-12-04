@@ -14,8 +14,7 @@ def download_and_classify_posts(username, data_inicial, data_final, max_posts=50
         data_inicial = datetime.strptime(data_inicial, "%d/%m/%Y")
         data_final = datetime.strptime(data_final, "%d/%m/%Y") + timedelta(days=1)
     except ValueError as e:
-        print("Erro no formato das datas:", e)
-        return None, 0, 0
+        return {"error:" "Erro no formato das datas"}, 0, 0, 0
     
     link = pyshorteners.Shortener()
 
