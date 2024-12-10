@@ -4,12 +4,11 @@ from datetime import datetime, timedelta
 import time
 
 # FUNÇÃO PARA BAIXAR E CLASSIFICAR OS POSTS
-def download_and_classify_posts(username, data_inicial, data_final, max_posts=50):
+def download_and_classify_posts(username, data_inicial, data_final, max_posts = 100):
     loader = instaloader.Instaloader()
     estatico, reel, carrossel, posts_selecionados = 0, 0, 0, []
     post_counter = 0
-
-     # Converte as datas para o formato datetime
+    
     try:
         data_inicial = datetime.strptime(data_inicial, "%d/%m/%Y")
         data_final = datetime.strptime(data_final, "%d/%m/%Y") + timedelta(days=1)
@@ -87,7 +86,7 @@ def extract_username(url_or_username):
 if __name__ == "__main__":
     input_data = input("\nInfome o link ou nome do perfil do Instagram: ")
     username = extract_username(input_data)
-    
+
     data_inicial = input("Informe a data inicial (dd/mm/aaaa): ")
     data_final = input("Informe a data final (dd/mm/aaaa): ")
 
@@ -103,7 +102,7 @@ if __name__ == "__main__":
         print(f"Total de carroséis: {carrossel}")
         print(f"Total de reels: {reel}")
         print(f"Classificação do Lead por estrela: {estrela}")
-        print(f"\n")
+        print(f"\n------------------------------\n")
 
         for idx, post in enumerate(posts, start = 1):
             print(f"Post {idx}:")

@@ -92,6 +92,8 @@ class HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+        
+        // BODY
         body: Padding(
           padding: const EdgeInsets.only(top: 0, bottom: 48.0, right: 24.0, left: 24.0),
           child: SingleChildScrollView(
@@ -112,61 +114,60 @@ class HomeScreenState extends State<HomeScreen> {
                       controller: _controller,
                       formKey: _formKey,
                     ),
+                  ],
+                ),
 
-                    // BUSCAR POSTS
-                    SizedBox(width: 12),
-                    ElevatedButton(
-                      onPressed: fetchPosts, 
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF0F4655),
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                      ),
-                      child: Text(
-                        'Buscar Posts',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
+                // DATAS INICIAL E FINAL
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () => selectDate(context, startDate), 
+                      icon: const Icon(Icons.today, size: 32, color: Color(0xFF0F4655)),
+                    ),
+
+                    CustomDateBox(
+                      labelText: 'Data Inicial:', 
+                      hintText: 'DD/MM/AAAA', 
+                      height: 60, 
+                      width: 194,
+                      controller: startDate,
+                      onClickIcon: () => selectDate(context, startDate),
+                    ),
+
+                    const SizedBox(width: 12),
+                    CustomDateBox(
+                      labelText: 'Data Final:', 
+                      hintText: 'DD/MM/AAAA', 
+                      height: 60, 
+                      width: 194,
+                      controller: endDate,
+                      onClickIcon: () => selectDate(context, endDate),
+                    ),
+
+                    IconButton(
+                      onPressed: () => selectDate(context, endDate),
+                      icon: const Icon(Icons.event, size: 32, color: Color(0xFF0F4655)),
                     ),
                   ],
                 ),
 
-                  // DATAS INICIAL E FINAL
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () => selectDate(context, startDate), 
-                        icon: const Icon(Icons.today, size: 32, color: Color(0xFF0F4655)),
-                        ),
-
-                      CustomDateBox(
-                        labelText: 'Data Inicial:', 
-                        hintText: 'DD/MM/AAAA', 
-                        height: 60, 
-                        width: 194,
-                        controller: startDate,
-                        onClickIcon: () => selectDate(context, startDate),
-                        ),
-
-                      const SizedBox(width: 12),
-                      CustomDateBox(
-                        labelText: 'Data Final:', 
-                        hintText: 'DD/MM/AAAA', 
-                        height: 60, 
-                        width: 194,
-                        controller: endDate,
-                        onClickIcon: () => selectDate(context, endDate),
-                      ),
-
-                      IconButton(
-                        onPressed: () => selectDate(context, endDate),
-                        icon: const Icon(Icons.event, size: 32, color: Color(0xFF0F4655)),
-                      ),
-                    ],
+                // BUSCAR POSTS
+                SizedBox(height: 12),
+                ElevatedButton(
+                  onPressed: fetchPosts, 
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF0F4655),
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12)),
+                  child: Text('Buscar Posts',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    
                   ),
-
+                ),
+                
                 // COUNTER BOXES + CATEGORIAS
-                const SizedBox(height: 24),
+                const SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
