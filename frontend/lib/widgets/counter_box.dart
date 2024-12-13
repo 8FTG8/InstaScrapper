@@ -33,7 +33,7 @@ class CounterBox extends StatelessWidget {
             border: Border.all(color: (Color(0xFF0F4655))),
           ),
           child: Text(
-            counter.toString().padLeft(3, '0'),
+            counter.toString().padLeft(3, ''),
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,

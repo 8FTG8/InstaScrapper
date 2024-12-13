@@ -45,32 +45,6 @@ class HomeScreenState extends State<HomeScreen> {
   final _controller = TextEditingController();
   final ApiService apiService = ApiService(baseUrl: 'http://127.0.0.1:5000');
 
-  int _healthEducationCounter = 0;
-  int _celebrationCounter = 0;
-  int _publicityCounter = 0;
-  int _stars = 1;
-  List<dynamic> _capturedPosts = [];
-
-  Future<void> fetchPosts() async {
-    try {
-      final data = await apiService.fetchPosts(
-        username: _controller.text,
-        dataInicial: startDate.text,
-        dataFinal: endDate.text,
-      );
-
-      setState(() {
-        _healthEducationCounter = data['estatico'];
-        _celebrationCounter = data['carrossel'];
-        _publicityCounter = data['reel'];
-        _stars = data['estrela'];
-        _capturedPosts = data['posts'];
-      });
-    } catch (e) {
-      print("Erro ao buscar posts: $e");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -160,9 +134,9 @@ class HomeScreenState extends State<HomeScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF0F4655),
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12)),
-                  child: Text('Buscar Posts',
+                  child: 
+                  Text('Buscar Posts',
                     style: TextStyle(color: Colors.white, fontSize: 18),
-                    
                   ),
                 ),
                 
@@ -245,6 +219,33 @@ class HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  // FUNÇÃO PARA BUSCAR OS POSTS
+  int _healthEducationCounter = 0;
+  int _celebrationCounter = 0;
+  int _publicityCounter = 0;
+  int _stars = 1;
+  List<dynamic> _capturedPosts = [];
+
+  Future<void> fetchPosts() async {
+    try {
+      final data = await apiService.fetchPosts(
+        username: _controller.text,
+        dataInicial: startDate.text,
+        dataFinal: endDate.text,
+      );
+
+      setState(() {
+        _healthEducationCounter = data['estatico'];
+        _celebrationCounter = data['carrossel'];
+        _publicityCounter = data['reel'];
+        _stars = data['estrela'];
+        _capturedPosts = data['posts'];
+      });
+    } catch (e) {
+      print("Erro ao buscar posts: $e");
+    }
   }
 }
 

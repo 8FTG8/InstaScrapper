@@ -34,7 +34,7 @@ class _CheckBoxState extends State<CheckBox> {
         GestureDetector(
           onTap: () {
             setState(() {
-              enable = !enable; // Altera o estado ao clicar
+              enable = enable; // Altera o estado
             });
           },
           child: Container(

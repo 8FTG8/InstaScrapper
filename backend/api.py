@@ -11,10 +11,12 @@ CORS(app)
 # FUNÇÃO PARA BAIXAR E CLASSIFICAR OS POSTS
 def download_and_classify_posts(username, data_inicial, data_final, max_posts=50):
     loader = instaloader.Instaloader()
+    loader.login('produtodrfisiologia', 'qwert00...')
+    loader.save_session_to_file('produtodrfisiologia')
+    
     estatico, reel, carrossel, posts_selecionados = 0, 0, 0, []
     post_counter = 0
 
-     # Converte as datas para o formato datetime
     try:
         data_inicial = datetime.strptime(data_inicial, "%d/%m/%Y")
         data_final = datetime.strptime(data_final, "%d/%m/%Y") + timedelta(days=1)
@@ -34,13 +36,12 @@ def download_and_classify_posts(username, data_inicial, data_final, max_posts=50
                 shorten_url = link.tinyurl.short(post.url)
                 
                 posts_selecionados.append({
-                    "Data": post.date.isoformat,
+                    "Data": post.date.isoformat(),
                     "Formato do Post": post.typename,
                     "URL Encurtada": shorten_url,
                     "Legenda": post.caption,
                 })
 
-                # Classifica o tipo do post
                 if post.typename == "GraphImage":
                     estatico += 1
                     
@@ -53,12 +54,12 @@ def download_and_classify_posts(username, data_inicial, data_final, max_posts=50
                 post_counter += 1
                 time.sleep(1)
 
-                loader.download_post(post, target=username)
+                #loader.download_post(post, target=username)
 
         return posts_selecionados, estatico, reel, carrossel
     
     except Exception as e:
-        return{"error": str(e)}, 0, 0, 0
+        return{"error": f"Erro ao processar o perfil: {str(e)}"}, 0, 0, 0
 
 # FUNÇÃO PARA CLASSIFICAR LEADS POR ESTRELAS
 def classify_profile_stars(posts):
