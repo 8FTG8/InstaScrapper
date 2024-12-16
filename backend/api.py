@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 # FUNÇÃO PARA BAIXAR E CLASSIFICAR OS POSTS
-def download_and_classify_posts(username, data_inicial, data_final, max_posts=50):
+def download_and_classify_posts(username, data_inicial, data_final, max_posts=100):
     loader = instaloader.Instaloader()
     loader.login('produtodrfisiologia', 'qwert00...')
     loader.save_session_to_file('produtodrfisiologia')
