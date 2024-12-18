@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import instaloader
 import pyshorteners
 import time
+import requests
 
 app = Flask(__name__)
 CORS(app)
@@ -13,6 +14,18 @@ def download_and_classify_posts(username, data_inicial, data_final, max_posts=10
     loader = instaloader.Instaloader()
     loader.login('produtodrfisiologia', 'qwert00...')
     loader.save_session_to_file('produtodrfisiologia')
+
+    # Configuração do Proxy para o Instaloader
+    proxies = {
+        'http': 'http://198.44.255.5:80',
+        'https': 'http://198.44.255.5:80',
+    }
+
+    # Atualizando o proxy na sessão do Instaloader
+    loader.context._session.proxies.update(proxies)
+
+    # Teste de conexão com Instagram usando o proxy
+    response = requests.get('https://www.instagram.com', proxies=proxies)
     
     estatico, reel, carrossel, posts_selecionados = 0, 0, 0, []
     post_counter = 0
@@ -104,4 +117,4 @@ def analyze():
     })
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = False)

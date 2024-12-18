@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
-import 'package:frontend/widgets/check_box.dart';
 import 'package:frontend/widgets/counter_box.dart';
 import 'package:frontend/widgets/text_box.dart';
 import 'package:frontend/widgets/date_box.dart';
@@ -43,7 +42,7 @@ class HomeScreenState extends State<HomeScreen> {
   final TextEditingController endDate = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final _controller = TextEditingController();
-  final ApiService apiService = ApiService(baseUrl: 'http://127.0.0.1:5000');
+  final ApiService apiService = ApiService(baseUrl: 'http://198.44.255.5:80');
 
   @override
   Widget build(BuildContext context) {
@@ -145,24 +144,24 @@ class HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CounterBox(label: 'Educação em saúde:', counter: _healthEducationCounter),
+                    CounterBox(label: 'Educação em saúde:', counter: _estaticCounter),
                     SizedBox(width: 18),
-                    CounterBox(label: 'Data comemorativa:', counter: _celebrationCounter),
+                    CounterBox(label: 'Data comemorativa:', counter: _sidecarCounter),
                     SizedBox(width: 18),
-                    CounterBox(label:'Publicidade:', counter: _publicityCounter),
+                    CounterBox(label:'Publicidade:', counter: _reelCounter),
                   ],
                 ),
 
-                // CHECK BOXES + FORMATOS
+                // COUNTER BOXES + FORMATOS
                 const SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CheckBox(label: 'Reels', enable: true),
-                    const SizedBox(width: 24),
-                    CheckBox(label: 'Carrossel', enable: false),
-                    const SizedBox(width: 24),
-                    CheckBox(label: 'Estático', enable: true),
+                    CounterBox(label: 'Estático:', counter: _estaticCounter),
+                    SizedBox(width: 24),
+                    CounterBox(label: 'Carrossel:', counter: _sidecarCounter),
+                    SizedBox(width: 24),
+                    CounterBox(label: 'Estático:', counter: _reelCounter),
                   ],
                 ),
 
@@ -188,7 +187,7 @@ class HomeScreenState extends State<HomeScreen> {
                 ),
 
                 // GRID DE POSTS CAPTURADOS
-                const SizedBox(height: 36),
+                /*const SizedBox(height: 36),
                 GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -212,7 +211,7 @@ class HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   },
-                ),
+                ),*/
               ],
             ),
           ),
@@ -222,10 +221,10 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   // FUNÇÃO PARA BUSCAR OS POSTS
-  int _healthEducationCounter = 0;
-  int _celebrationCounter = 0;
-  int _publicityCounter = 0;
-  int _stars = 1;
+  int _estaticCounter = 0;
+  int _sidecarCounter = 0;
+  int _reelCounter = 0;
+  int _stars = 0;
   List<dynamic> _capturedPosts = [];
 
   Future<void> fetchPosts() async {
@@ -237,9 +236,14 @@ class HomeScreenState extends State<HomeScreen> {
       );
 
       setState(() {
-        _healthEducationCounter = data['estatico'];
-        _celebrationCounter = data['carrossel'];
-        _publicityCounter = data['reel'];
+        //_healthEducationCounter
+        //_celebrationCounter
+        //_publicityCounter
+
+        _estaticCounter = data['estatico'];
+        _sidecarCounter = data['carrossel'];
+        _reelCounter = data['reel'];
+
         _stars = data['estrela'];
         _capturedPosts = data['posts'];
       });

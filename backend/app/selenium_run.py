@@ -13,6 +13,7 @@ def init_driver():
     options = webdriver.ChromeOptions()
     options.add_argument("--start-maximized")
     options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_argument("--headless")
 
     # Inicializa o driver com o serviço e as opções configuradas
     driver = webdriver.Chrome(service=service, options=options)
@@ -113,7 +114,7 @@ if __name__ == "__main__":
 
         # Faz o login no Instagram
         usuario = "produtodrfisiologia"
-        senha = "qwert00..."
+        senha = ""
         login_instagram(driver, usuario, senha)
         
         # Baixa e classifica os posts

@@ -1,13 +1,20 @@
 import instaloader
+import requests
 import pyshorteners
-from datetime import datetime, timedelta
 import time
+from datetime import datetime, timedelta
 
 # FUNÇÃO PARA BAIXAR E CLASSIFICAR OS POSTS
 def download_and_classify_posts(username, data_inicial, data_final, max_posts = 100):
     loader = instaloader.Instaloader()
-    loader.login('produtodrfisiologia', 'qwert00...')
-    loader.save_session_to_file('produtodrfisiologia')
+
+    proxies = {
+        'http': '198.44.255.5:80',
+        'https': '198.44.255.5:80',
+    }
+    loader.context._session.proxies.update(proxies)
+    
+    response = requests.get('https://www.instagram.com', proxies=proxies)
 
     estatico, reel, carrossel, posts_selecionados = 0, 0, 0, []
     post_counter = 0
@@ -15,8 +22,9 @@ def download_and_classify_posts(username, data_inicial, data_final, max_posts = 
     try:
         data_inicial = datetime.strptime(data_inicial, "%d/%m/%Y")
         data_final = datetime.strptime(data_final, "%d/%m/%Y") + timedelta(days=1)
+
     except ValueError as e:
-        return {"error:" "Erro no formato das datas"}, 0, 0, 0
+        return {"error": "Erro no formato das datas"}, 0, 0, 0
     
     link = pyshorteners.Shortener()
 
@@ -24,14 +32,16 @@ def download_and_classify_posts(username, data_inicial, data_final, max_posts = 
         profile = instaloader.Profile.from_username(loader.context, username)
 
         for post in profile.get_posts():
+
             if post_counter >= max_posts:
                 break
+
             if data_inicial <= post.date < data_final:
 
                 shorten_url = link.tinyurl.short(post.url)
                 
                 posts_selecionados.append({
-                    "Data": post.date,
+                    "Data": post.date.strftime("%d/%m/%Y"),
                     "Formato do Post": post.typename,
                     "URL Encurtada": shorten_url,
                     "Legenda": post.caption,
@@ -55,8 +65,7 @@ def download_and_classify_posts(username, data_inicial, data_final, max_posts = 
         return posts_selecionados, estatico, reel, carrossel
     
     except Exception as e:
-        print("Ocorreu um erro: ", e)
-        return None, 0, 0, 0
+        print(f"Ocorreu um erro ao processar o post: {e}")
 
 # FUNÇÃO PARA CLASSIFICAR LEADS POR ESTRELAS
 def classify_profile_stars(posts):
