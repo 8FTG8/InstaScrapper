@@ -1,6 +1,6 @@
 import instaloader
-import requests
 import pyshorteners
+import requests
 import time
 from datetime import datetime, timedelta
 
@@ -60,7 +60,7 @@ def download_and_classify_posts(username, data_inicial, data_final, max_posts = 
                 post_counter += 1
                 time.sleep(1)
 
-                #loader.download_post(post, target=username)
+                loader.download_post(post, target=username)
 
         return posts_selecionados, estatico, reel, carrossel
     

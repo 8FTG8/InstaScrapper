@@ -1,10 +1,10 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from datetime import datetime, timedelta
-import instaloader
-import pyshorteners
 import time
 import requests
+import instaloader
+import pyshorteners
+from flask import Flask, request, jsonify
+from datetime import datetime, timedelta
+from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
@@ -25,7 +25,7 @@ def download_and_classify_posts(username, data_inicial, data_final, max_posts=10
     loader.context._session.proxies.update(proxies)
 
     # Teste de conexão com Instagram usando o proxy
-    response = requests.get('https://www.instagram.com', proxies=proxies)
+    requests.get('https://www.instagram.com', proxies=proxies)
     
     estatico, reel, carrossel, posts_selecionados = 0, 0, 0, []
     post_counter = 0

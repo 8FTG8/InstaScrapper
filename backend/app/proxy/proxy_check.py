@@ -5,7 +5,7 @@ import requests
 queue = queue.Queue()
 valid_proxies = []
 
-with open("app/proxy_list.txt", "r") as file:
+with open("C:/Users/drfis/Codes/IA_Instagram/backend/app/proxy/proxy_list.txt", "r") as file:
     proxies = file.read().splitlines()
     for p in proxies:
         queue.put(p)
