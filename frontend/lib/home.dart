@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/counter_box.dart';
 import 'package:frontend/widgets/text_box.dart';
@@ -44,7 +42,6 @@ class HomeScreenState extends State<HomeScreen> {
 
   final ApiService apiService = ApiService(
     baseUrl: 'http://127.0.0.1:5000',
-    proxyUrl: 'http://198.44.255.5:80',
   );
 
   int _estaticCounter = 0;
@@ -135,8 +132,7 @@ class HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 12),
                 ElevatedButton(
                   onPressed: _isLoading
-                    ? null
-                    : () {
+                    ? null : () {
                       if (_formKey.currentState?.validate() ?? false) {
                         fetchPosts();
                       }

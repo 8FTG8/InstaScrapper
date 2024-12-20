@@ -1,5 +1,4 @@
 import time
-import requests
 import instaloader
 import pyshorteners
 from flask import Flask, request, jsonify
@@ -15,18 +14,6 @@ def download_and_classify_posts(username, data_inicial, data_final, max_posts=10
     loader.login('produtodrfisiologia', 'qwert00...')
     loader.save_session_to_file('produtodrfisiologia')
 
-    # Configuração do Proxy para o Instaloader
-    proxies = {
-        'http': 'http://198.44.255.5:80',
-        'https': 'http://198.44.255.5:80',
-    }
-
-    # Atualizando o proxy na sessão do Instaloader
-    loader.context._session.proxies.update(proxies)
-
-    # Teste de conexão com Instagram usando o proxy
-    requests.get('https://www.instagram.com', proxies=proxies)
-    
     estatico, reel, carrossel, posts_selecionados = 0, 0, 0, []
     post_counter = 0
 
@@ -35,19 +22,21 @@ def download_and_classify_posts(username, data_inicial, data_final, max_posts=10
         data_final = datetime.strptime(data_final, "%d/%m/%Y") + timedelta(days=1)
     except ValueError as e:
         return {"error": "Erro no formato das datas"}, 0, 0, 0
-    
+
     link = pyshorteners.Shortener()
 
     try:
         profile = instaloader.Profile.from_username(loader.context, username)
 
         for post in profile.get_posts():
+            
             if post_counter >= max_posts:
                 break
+
             if data_inicial <= post.date < data_final:
 
                 shorten_url = link.tinyurl.short(post.url)
-                
+
                 posts_selecionados.append({
                     "Data": post.date.isoformat(),
                     "Formato do Post": post.typename,
@@ -67,7 +56,7 @@ def download_and_classify_posts(username, data_inicial, data_final, max_posts=10
                 post_counter += 1
                 time.sleep(1)
 
-                #loader.download_post(post, target=username)
+                # loader.download_post(post, target=username)
 
         return posts_selecionados, estatico, reel, carrossel
     
@@ -88,9 +77,10 @@ def classify_profile_stars(posts):
         (datetime.fromisoformat(last_ten_posts[i - 1]["Data"]) - datetime.fromisoformat(last_ten_posts[i]["Data"])).days
         for i in range(1, len(last_ten_posts))
     ]
-
+    
     if any(intervalo > 10 for intervalo in intervalos):
         return 2
+    
     else:
         return 3
     
