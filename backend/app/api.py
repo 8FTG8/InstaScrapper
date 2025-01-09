@@ -11,8 +11,6 @@ CORS(app)
 # FUNÇÃO PARA BAIXAR E CLASSIFICAR OS POSTS
 def download_and_classify_posts(username, data_inicial, data_final, max_posts=100):
     loader = instaloader.Instaloader()
-    loader.login('produtodrfisiologia', 'qwert00...')
-    loader.save_session_to_file('produtodrfisiologia')
 
     estatico, reel, carrossel, posts_selecionados = 0, 0, 0, []
     post_counter = 0
@@ -56,7 +54,7 @@ def download_and_classify_posts(username, data_inicial, data_final, max_posts=10
                 post_counter += 1
                 time.sleep(1)
 
-                # loader.download_post(post, target=username)
+                #loader.download_post(post, target=username)
 
         return posts_selecionados, estatico, reel, carrossel
     
@@ -80,7 +78,6 @@ def classify_profile_stars(posts):
     
     if any(intervalo > 10 for intervalo in intervalos):
         return 2
-    
     else:
         return 3
     
