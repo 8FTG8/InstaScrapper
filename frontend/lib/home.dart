@@ -41,7 +41,7 @@ class HomeScreenState extends State<HomeScreen> {
   final _controller = TextEditingController();
 
   final ApiService apiService = ApiService(
-    baseUrl: '',
+    baseUrl: 'http://172.16.179.126:5000',
   );
 
   int _estaticCounter = 0;
@@ -264,6 +264,7 @@ class HomeScreenState extends State<HomeScreen> {
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
     );
+    
     if (pickedDate != null) {
       controller.text = '${pickedDate.day}/${pickedDate.month}/${pickedDate.year}';
     }
