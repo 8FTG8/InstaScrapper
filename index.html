@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang = "pt-BR">
+    
+<head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width=device_width, initial_scale = 1.0">
+    <title> Análise de Posts </title>
+    <link rel = "stylesheet" href = "style.css">
+</head>
+
+<body>
+    <header class = "app_bar">
+        <img src = "assets/logo_drfisiologia.png" alt = "Logo" class = "logo">
+        <img src = "assets/lupa_drfisiologia.png" alt = "Lupa" class = "lupa">
+    </header>
+
+    <main class = "container">
+        <!-- Nome ou Link do Perfil -->
+        <section class="form_section">
+            <div class = "form_group">
+                <input id = "profile_input" type = "text" placeholder = "Nome ou link do perfil" class = "input_perfil">
+            </div>
+        </section>
+
+        <!-- Datas Inicial e Final -->
+        <section class = "form_group">
+            <div>
+                <input id = "start_date" type = "date" class = "input_date">
+                <input id = "end_date" type = "date" class = "input_date">
+            </div>
+        </section>
+
+        <!-- Botão Buscar Posts -->
+           <button id = "fetch_posts" class = "button"> Buscar Posts </button>
+
+        <!-- Contadores -->
+        <h3>Tipos dos Posts</h3>
+        <div class = "counters">
+            <label for = "education_count"> Educação em saúde: </label>
+            <input id = "education_count" type = "number" class = "input_type_format">
+
+            <label for = "commemorative_count"> Data Comemorativa: </label>
+            <input id = "commemorative_count" type = "number" class = "input_type_format">
+
+            <label for = "publicity_count"> Data Comemorativa: </label>
+            <input id = "publicity_count" type = "number" class = "input_type_format">
+        </div>
+
+        <!-- Formatos de Posts -->
+        <h3>Formatos dos Posts</h3>
+        <div class = "format_counters">
+            <label for = "estatic"> Estático: </label>
+            <input id = "estatic_count" type = "number" class = "input_type_format">
+
+            <label for = "sidecar_count"> Corrossel: </label>
+            <input id = "sidecar_count" type = "number" class = "input_type_format">
+
+            <label for = "reel_count"> Reel: </label>
+            <input id = "reel_count" type = "number" class = "input_type_format">
+        </div>
+
+        <!-- Classificação por Estrelas -->
+        <div class = "stars">
+            <label> Classificação por estrelas: </label>
+            <div id = "star_rating" class = "star_rating"></div>
+        </div>
+
+        <!-- Posts Capturados -->
+        <h2> Posts Capturados </h2>
+        <div id = "post_grid" class = "grid"></div>
+    </main>
+
+    <script src = "script.js"></script>
+</body>
+
+</html>
