@@ -1,2 +1,2 @@
-# Instagram_scrapper
-Inteligência Artificial que analisa posts do Instagram.
+# Instagram Scrapper
+aplicação que faz o scrapping de perfis públicos do instagram.
