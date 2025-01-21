@@ -1,2 +1,2 @@
-# IA_Instagram
+# Instagram_scrapper
 Inteligência Artificial que analisa posts do Instagram.
