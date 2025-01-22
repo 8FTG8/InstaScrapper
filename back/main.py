@@ -90,7 +90,7 @@ def classify_profile_stars(posts):
     
     last_post_date = validate_date(posts[0]["Data"])
     if datetime.now() - last_post_date > timedelta(days=90):
-        return 1f
+        return 1
     
     last_ten_posts = [validate_date(post["Data"]) for post in posts[:10]]
     intervalos = [

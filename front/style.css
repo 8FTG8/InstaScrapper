@@ -1,6 +1,6 @@
 /*--- ESTILOS GERAIS ---*/
 body {
-    font-family: Geneva, sans-serif;
+    font-family: Tahoma, sans-serif;
     background-color: #E2E2E2;
     margin: 0;
     padding: 0;
@@ -15,7 +15,7 @@ body {
 }
 
 .container {
-    padding: 24px;
+    padding: 36px;
     text-align: center;
     margin: auto;
 }
@@ -27,29 +27,37 @@ body {
 
 /*--- CAMPOS DE TEXTOS ---*/
 input {
-    height: 24px;
-    padding: 8px;
-    margin-right: 8px;
+    text-align: center;
+    margin-right: 1%;
     border: 1px solid #0F4655;
     border-radius: 6px;
 }
 
 .input_perfil {
+    font-size: 16px;
+    height: 40px;
     width: 24%;
 }
 
 .input_date {
+    height: 40px;
     width: 12%;
     margin-right: 1%;
+    font-size: large;
 }
 
 .input_type_format {
-    width: 4%;
+    font-size: 20px;
+    text-align: center;
+    height: fit-content;
+    width: 2%;
+    margin-right: 1%;
 }
 
 /*--- BOTÃO ---*/
 .button {
-    width: 180px;
+    width: 200px;
+    font-size: medium;
     background-color: #0F4655;
     color: white;
     padding: 10px 20px;
@@ -59,19 +67,18 @@ input {
 }
 
 button:hover {
-    background-color: #0D3947;
+    background-color: #1a83a3;
 }
 
-.counters {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0px;
+.type_format_counters {
+    font-weight: 500;
+    padding: 0.5%;
 }
 
-.counter {
-    background-color: white;
-    padding: 10px;
-    border: 1px solid #ccc;
+/*--- ESTRELAS ---*/
+
+.stars {
+    font-size: 16px;
 }
 
 .star_rating {
@@ -81,10 +88,13 @@ button:hover {
 
 .star_rating span {
     font-size: 24px;
-    cursor: pointer;
 }
 
 h2 {
+    color: #0F4655;
+}
+
+h3 {
     color: #0F4655;
 }
 

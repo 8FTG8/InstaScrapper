@@ -10,7 +10,6 @@ test_profiles = [
     "instagram.com/labsantaritadiagnosticos",
     "instagram.com/laboratoriovisao",
     "instagram.com/laboratorioanalisescp",
-
 ]
 
 # Datas de teste
