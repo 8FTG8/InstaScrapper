@@ -3,15 +3,15 @@
     
 <head>
     <meta charset = "UTF-8">
-    <meta name = "viewport" content = "width=device_width, initial_scale = 1.0">
+    <meta name = "viewport" content = "width=device-width, initial_scale = 1.0">
     <title> Análise de Posts </title>
     <link rel = "stylesheet" href = "style.css">
 </head>
 
 <body>
     <header class = "app_bar">
-        <img src = "../assets/logo_drfisiologia.png" alt = "Logo" class = "logo">
-        <img src = "../assets/lupa_drfisiologia.png" alt = "Lupa" class = "lupa">
+        <img src = "assets/logo_drfisiologia.png" alt = "Logo" class = "logo">
+        <img src = "assets/lupa_drfisiologia.png" alt = "Lupa" class = "lupa">
     </header>
 
     <main class = "container">
@@ -42,7 +42,7 @@
             <label for = "commemorative_count"> Data Comemorativa: </label>
             <input id = "commemorative_count" type = "number" class = "input_type_format" value = "0">
 
-            <label for = "publicity_count"> Data Comemorativa: </label>
+            <label for = "publicity_count"> Publicidade: </label>
             <input id = "publicity_count" type = "number" class = "input_type_format" value = "0">
         </div>
 
@@ -76,3 +76,61 @@
 </body>
 
 </html>
+
+<script>
+    document.getElementById("fetch_posts").addEventListener("click", async () => {
+        const username = document.getElementById("profile_input").value;
+        const startDate = document.getElementById("start_date").value;
+        const endDate = document.getElementById("end_date").value;
+
+        if (!username || !startDate || !endDate) {
+            alert("Por favor, preencha todos os campos!");
+            return;
+        }
+
+        try {
+            const response = await fetch("http://127.0.0.1:5000/analyze_posts", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    start_date: startDate,
+                    end_date: endDate
+                })
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                alert(`Erro: ${error.error}`);
+                return;
+            }
+
+            const data = await response.json();
+            document.getElementById("education_count").value = data.estatico;
+            document.getElementById("commemorative_count").value = data.carrossel;
+            document.getElementById("publicity_count").value = data.reel;
+
+            // Atualizar classificação por estrelas
+            document.getElementById("star_rating").textContent = `${data.estrela} Estrela(s)`;
+
+            // Atualizar grid de posts
+            const grid = document.getElementById("post_grid");
+            grid.innerHTML = "";
+            data.posts.forEach(post => {
+                const div = document.createElement("div");
+                div.className = "post_item";
+                div.innerHTML = `
+                    <p>Data: ${post.Data}</p>
+                    <p>Formato: ${post["Formato do Post"]}</p>
+                    <p>URL: <a href="${post["URL Encurtada"]}" target="_blank">Acessar Post</a></p>
+                    <p>Legenda: ${post.Legenda}</p>
+                `;
+                grid.appendChild(div);
+            });
+        } catch (err) {
+            alert(`Erro ao buscar posts: ${err.message}`);
+        }
+    });
+</script>

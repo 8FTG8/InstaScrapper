@@ -100,11 +100,22 @@ h3 {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 16px;
 }
 
 .grid img {
     width: 100%;
     border-radius: 6px;
+}
+
+.post_item {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.post_item p {
+    margin: 5px 0;
 }
