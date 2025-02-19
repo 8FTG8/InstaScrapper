@@ -1,6 +1,0 @@
-selenium
-pyshorteners
-webdriver-manager
-requests
-stem
-pytest
